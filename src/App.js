@@ -12,33 +12,27 @@ class App extends React.Component {
     };
 
     addTask = task => {
-        this.setState(state => {
-            let {tasks} = state;
-            tasks.push({
-                id: tasks.length !== 0 ? tasks.length : 0,
+        this.setState(({ tasks }) => ({
+            tasks: tasks.concat({
+                id: +(new Date()),
                 title: task,
                 done: false,
-            });
-            return tasks;
-        });
+            }),
+        }));
     };
 
     doneTask = id => {
         const index = this.state.tasks.map(task => task.id).indexOf(id);
-        this.setState(state => {
-            let { tasks } = state;
+        this.setState(({ tasks }) => {
             tasks[index].done = true;
             return tasks;
         });
     };
 
-    deleteTask = id =>{
-        const index = this.state.tasks.map(task => task.id).indexOf(id);
-        this.setState(state => {
-            let { tasks } = state;
-            delete tasks[index];
-            return tasks;
-        });
+    deleteTask = (id) => {
+        this.setState(({ tasks }) => ({
+            tasks: tasks.filter((task) => task.id !== id),
+        }));
     };
 
     render() {
@@ -55,10 +49,9 @@ class App extends React.Component {
                         deleteTask={()=>this.deleteTask(task.id)}
                         task={task}
                         key={task.id}
-                    >
-                    </Task>
+                    />
                 ))}
-                <TaskInput addTask={this.addTask}></TaskInput>
+                <TaskInput addTask={this.addTask}/>
             </div>
         );
     }
