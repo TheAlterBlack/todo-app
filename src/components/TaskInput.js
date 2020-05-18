@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class TaskInput extends React.Component {
+export default class TaskInput extends Component {
   state = {
     input: ''
   };

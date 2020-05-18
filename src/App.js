@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Task from './components/Task';
 import TaskInput from './components/TaskInput';
 
-class App extends React.Component {
+export default class App extends Component {
     state = {
         tasks: [
             {id: 0, title: 'task1', done: false},
@@ -11,7 +11,7 @@ class App extends React.Component {
         ],
     };
 
-    addTask = task => {
+    addTask = (task) => {
         this.setState(({ tasks }) => ({
             tasks: tasks.concat({
                 id: +(new Date()),
@@ -21,12 +21,15 @@ class App extends React.Component {
         }));
     };
 
-    doneTask = id => {
-        const index = this.state.tasks.map(task => task.id).indexOf(id);
-        this.setState(({ tasks }) => {
-            tasks[index].done = true;
-            return tasks;
-        });
+    doneTask = (id) => {
+        this.setState(({ tasks }) => ({
+            tasks: tasks.map(task => {
+                if (task.id === id) {
+                    task.done = true;
+                }
+                return task;
+            }),
+        }));
     };
 
     deleteTask = (id) => {
@@ -45,8 +48,8 @@ class App extends React.Component {
                 <h1 className="top">Active tasks: {activeTasks.length}</h1>
                 {[...activeTasks,...doneTasks].map(task => (
                     <Task
-                        doneTask={()=>this.doneTask(task.id)}
-                        deleteTask={()=>this.deleteTask(task.id)}
+                        doneTask={() => this.doneTask(task.id)}
+                        deleteTask={() => this.deleteTask(task.id)}
                         task={task}
                         key={task.id}
                     />
@@ -56,5 +59,3 @@ class App extends React.Component {
         );
     }
 }
-
-export default App;
