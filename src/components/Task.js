@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 
 export default class Task extends Component {
 
+    doneTask = () => {
+        const {task, doneTask} = this.props;
+
+        doneTask(task.id);
+    };
+
+    deleteTask = () => {
+        const {task, deleteTask} = this.props;
+
+        deleteTask(task.id);
+    };
+
     render() {
         const className = 'task ' + (this.props.task.done ? 'task-done' : '');
 
@@ -11,13 +23,17 @@ export default class Task extends Component {
 
                 <div className="action-btn">
                     {!this.props.task.done ? (
-                        <span aria-label="done" role="img" onClick={this.props.doneTask}>
-          ✔️
-                        </span>
+                        <button onClick={this.doneTask}>
+                            <span aria-label="done" role="img">
+
+                            </span> ✔️
+                        </button>
                     ) : (
-                        <span aria-label="delete" role="img" onClick={this.props.deleteTask}>
-          ❌
-                        </span>
+                        <button onClick={this.deleteTask}>
+                            ❌<span aria-label="delete" role="img">
+
+                            </span>
+                        </button>
                     )}
                 </div>
             </div>

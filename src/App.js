@@ -39,20 +39,20 @@ export default class App extends Component {
     };
 
     render() {
-        const { tasks } = this.state;
-        const activeTasks = tasks.filter(task => !task.done);
-        const doneTasks = tasks.filter(task => task.done);
+        //The method sort will mutate the original array. Hence I create a new array using the concat method.
+        const tasks = [].concat(this.state.tasks);
 
         return(
             <div className="App">
-                <h1 className="top">Active tasks: {activeTasks.length}</h1>
-                {[...activeTasks,...doneTasks].map(task => (
-                    <Task
-                        doneTask={() => this.doneTask(task.id)}
-                        deleteTask={() => this.deleteTask(task.id)}
-                        task={task}
-                        key={task.id}
-                    />
+                <h1 className="top">Active tasks: {tasks.filter(task => !task.done).length}</h1>
+                {tasks.sort((a, b) => a.done - b.done)
+                    .map(task => (
+                        <Task
+                            doneTask={this.doneTask}
+                            deleteTask={this.deleteTask}
+                            task={task}
+                            key={task.id}
+                        />
                 ))}
                 <TaskInput addTask={this.addTask}/>
             </div>
