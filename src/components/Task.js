@@ -25,13 +25,13 @@ export default class Task extends Component {
                     {!this.props.task.done ? (
                         <button onClick={this.doneTask}>
                             <span aria-label="done" role="img">
-
-                            </span> ✔️
+                                ✔️
+                            </span> 
                         </button>
                     ) : (
                         <button onClick={this.deleteTask}>
-                            ❌<span aria-label="delete" role="img">
-
+                            <span aria-label="delete" role="img">
+                                ❌
                             </span>
                         </button>
                     )}
